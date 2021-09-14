@@ -5,4 +5,7 @@
     <string name="home">Home</string>
     <string name="favorite">Favorite</string>
     <string name="back">Back</string>
+    <string name="bookmark">Bookmark</string>
+    <string name="share">Share</string>
+    <string name="button_image">Button Image</string>
 </resources>

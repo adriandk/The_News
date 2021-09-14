@@ -40,21 +40,47 @@
                 android:textSize="28sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/date_detail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <LinearLayout
+                android:id="@+id/date_view"
                 android:layout_below="@id/title_detail"
                 android:layout_marginTop="8dp"
-                android:text="1 Januari 2020"
-                android:textColor="@color/grey"
-                android:textSize="18dp" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/date_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/title_detail"
+                    android:text="1 Januari 2020"
+                    android:textColor="@color/grey"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/circle_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/circle_icon"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_gravity="center_vertical" />
+
+                <TextView
+                    android:id="@+id/source_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="BBC"
+                    android:textColor="@color/grey"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/image_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/date_detail"
+                android:layout_below="@id/date_view"
                 android:layout_marginTop="16dp"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/news_image"
@@ -70,7 +96,28 @@
                 android:layout_marginTop="16dp"
                 android:text="Fitness band market share is undoubtedly contracting, thanks in no small part to the massive popularity of smartwatches. But 13.1 million overall shipments in Q1 2021 is nothing to sneeze at. People are still buying non-watch fitness trackers, due to their lower price and non-invasiveness. Announced this morning via the Google Keyword blog, the latest version of Fitbit’s Charge line looks to further blur the line line between the categories. The latest version of the premium fitness band adds a color touchscreen, along with ECG (heart) and EDA (stress) sensors."
                 android:textColor="@android:color/white"
-                android:textSize="18dp" />
+                android:textSize="18sp" />
+
+            <ImageButton
+                android:id="@+id/share_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/description_detail"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/share_icon"
+                android:contentDescription="@string/button_image" />
+
+            <ImageButton
+                android:id="@+id/bookmark_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/description_detail"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_toStartOf="@id/share_button"
+                android:background="@drawable/bookmark_border_icon"
+                android:contentDescription="@string/button_image" />
 
         </RelativeLayout>
     </androidx.core.widget.NestedScrollView>

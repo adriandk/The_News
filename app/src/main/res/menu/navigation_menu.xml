@@ -12,6 +12,6 @@
         android:id="@+id/favorite"
         android:title="@string/favorite"
         app:showAsAction="always"
-        android:icon="@drawable/favorite_icon" />
+        android:icon="@drawable/bookmark_icon" />
 
 </menu>
