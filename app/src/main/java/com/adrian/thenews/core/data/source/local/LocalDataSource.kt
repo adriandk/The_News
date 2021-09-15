@@ -1,13 +1,25 @@
 package com.adrian.thenews.core.data.source.local
 
+import androidx.paging.DataSource
 import com.adrian.thenews.core.data.source.local.entity.NewsEntity
 import com.adrian.thenews.core.data.source.local.room.NewsDao
-import kotlinx.coroutines.flow.Flow
 
 class LocalDataSource(private val newsDao: NewsDao) {
-    fun getAllNews(): Flow<List<NewsEntity>> = newsDao.getAllNews()
-    fun getBookmarkNews(): Flow<List<NewsEntity>> = newsDao.getBookmarkNews()
-    suspend fun insertNews(newsList: List<NewsEntity>) {
+
+    companion object {
+        private var instance: LocalDataSource? = null
+
+        fun getInstance(newsDao: NewsDao): LocalDataSource =
+            instance ?: synchronized(this) {
+                instance ?: LocalDataSource(newsDao)
+            }
+    }
+
+    fun getAllNews(): DataSource.Factory<Int, NewsEntity> = newsDao.getAllNews()
+
+    fun getBookmarkNews(): DataSource.Factory<Int, NewsEntity> = newsDao.getBookmarkNews()
+
+    fun insertNews(newsList: List<NewsEntity>) {
         newsDao.insertNews(newsList)
     }
 

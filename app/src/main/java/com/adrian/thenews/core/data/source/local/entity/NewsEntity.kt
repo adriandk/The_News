@@ -1,23 +1,20 @@
 package com.adrian.thenews.core.data.source.local.entity
 
-import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-
 @Entity(tableName = "news")
 data class NewsEntity(
-    @PrimaryKey
-    @NonNull
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "newsId")
-    var newsId: String,
+    var newsId: Int?,
 
     @ColumnInfo(name = "newsTitle")
-    var newsTitle: String,
+    var newsTitle: String?,
 
     @ColumnInfo(name = "description")
-    var newsDescription: String,
+    var newsDescription: String?,
 
     @ColumnInfo(name = "url")
     var url: String?,
