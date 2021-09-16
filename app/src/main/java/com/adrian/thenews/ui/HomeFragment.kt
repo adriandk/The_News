@@ -1,13 +1,26 @@
 package com.adrian.thenews.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.paging.PagedList
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.adrian.thenews.R
+import com.adrian.thenews.core.adapter.HomeAdapter
+import com.adrian.thenews.core.data.Resource
+import com.adrian.thenews.core.data.source.local.entity.NewsEntity
+import com.adrian.thenews.core.viewmodel.NewsViewModel
+import kotlinx.android.synthetic.main.fragment_home.*
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
+
+    private val newsViewModel: NewsViewModel by viewModel()
+    private lateinit var newsAdapter: HomeAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -19,6 +32,39 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if (activity != null) {
+            newsAdapter = HomeAdapter()
+            newsViewModel.news.observe(viewLifecycleOwner, newsObserver)
+
+            rv_news.layoutManager = LinearLayoutManager(context)
+            rv_news.setHasFixedSize(true)
+            rv_news.adapter = newsAdapter
+
+        }
+
+    }
+
+    private val newsObserver = Observer<Resource<PagedList<NewsEntity>>> {
+        if (it != null) {
+            when (it) {
+                is Resource.Loading -> loading_view.visibility = View.VISIBLE
+                is Resource.Success -> {
+                    newsAdapter.submitList(it.data)
+                    newsAdapter.setData(it.data)
+                    rv_news.visibility = View.VISIBLE
+                    loading_view.visibility = View.GONE
+                    error_view.visibility = View.GONE
+                    newsAdapter.onItemClick = {
+                        val intent = Intent(activity, DetailActivity::class.java)
+                        startActivity(intent)
+                    }
+                }
+                is Resource.Error -> {
+                    error_view.visibility = View.VISIBLE
+                    loading_view.visibility = View.GONE
+                }
+            }
+        }
     }
 
 }

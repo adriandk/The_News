@@ -40,7 +40,14 @@
                 <include layout="@layout/loading_view" />
             </LinearLayout>
         </ScrollView>
-
     </com.facebook.shimmer.ShimmerFrameLayout>
+
+    <include
+        android:id="@+id/error_view"
+        layout="@layout/error_view"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content" />
 
 </RelativeLayout>

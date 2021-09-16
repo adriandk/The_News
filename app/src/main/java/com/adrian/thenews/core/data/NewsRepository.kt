@@ -12,25 +12,11 @@ import com.adrian.thenews.core.domain.repository.INewsRepository
 import com.adrian.thenews.core.utils.AppExecutors
 import com.adrian.thenews.core.utils.DataMapper
 
-class NewsRepository private constructor(
+class NewsRepository(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource,
     private val appExecutors: AppExecutors
 ) : INewsRepository {
-
-    companion object {
-        @Volatile
-        private var instance: NewsRepository? = null
-
-        fun getInstance(
-            remoteData: RemoteDataSource,
-            localData: LocalDataSource,
-            appExecutors: AppExecutors
-        ): NewsRepository =
-            instance ?: synchronized(this) {
-                instance ?: NewsRepository(remoteData, localData, appExecutors)
-            }
-    }
 
     override fun loadAllNews(): LiveData<Resource<PagedList<NewsEntity>>> =
         object : NetworkBoundResource<PagedList<NewsEntity>, List<NewsResponse>>(appExecutors) {

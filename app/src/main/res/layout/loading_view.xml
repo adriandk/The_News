@@ -18,7 +18,7 @@
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
-            android:layout_height="152dp"
+            android:layout_height="182dp"
             android:adjustViewBounds="true"
             android:background="@android:color/darker_gray"
             android:contentDescription="@string/news_image"
