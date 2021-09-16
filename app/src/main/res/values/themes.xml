@@ -13,6 +13,9 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
         <item name="android:navigationBarColor">@color/colorBlack</item>
+
+        <item name="android:textColorHint">@android:color/white</item>
+        <item name="android:editTextColor">@android:color/white</item>
     </style>
 
     <style name="Thenews.AppBarOverlay" parent="ThemeOverlay.AppCompat.DayNight.ActionBar" />

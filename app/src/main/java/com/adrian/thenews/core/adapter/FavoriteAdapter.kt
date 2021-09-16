@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.news_item.view.*
 
-class HomeAdapter : PagedListAdapter<NewsEntity, HomeAdapter.ViewHolder>(DIFF_CALLBACK) {
+class FavoriteAdapter : PagedListAdapter<NewsEntity, FavoriteAdapter.ViewHolder>(DIFF_CALLBACK) {
 
     var onItemClick: ((NewsEntity) -> Unit)? = null
     private var newsList = ArrayList<NewsEntity>()
@@ -24,12 +24,12 @@ class HomeAdapter : PagedListAdapter<NewsEntity, HomeAdapter.ViewHolder>(DIFF_CA
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.news_item, parent, false)
         return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: HomeAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(newsList[position])
     }
 

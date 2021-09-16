@@ -14,7 +14,7 @@
         tools:listitem="@layout/news_item" />
 
     <com.facebook.shimmer.ShimmerFrameLayout
-        android:id="@+id/loading_view"
+        android:id="@+id/loading_state"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="invisible"
@@ -40,7 +40,14 @@
                 <include layout="@layout/loading_view" />
             </LinearLayout>
         </ScrollView>
-
     </com.facebook.shimmer.ShimmerFrameLayout>
+
+    <include
+        android:id="@+id/empty_view"
+        layout="@layout/error_view"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content" />
 
 </RelativeLayout>
