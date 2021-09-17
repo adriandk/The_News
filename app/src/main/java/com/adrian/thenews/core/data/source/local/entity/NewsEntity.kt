@@ -13,6 +13,9 @@ data class NewsEntity(
     @ColumnInfo(name = "newsTitle")
     var newsTitle: String?,
 
+    @ColumnInfo(name = "source")
+    var sourceNews: String?,
+
     @ColumnInfo(name = "description")
     var newsDescription: String?,
 

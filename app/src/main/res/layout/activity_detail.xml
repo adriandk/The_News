@@ -1,125 +1,152 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/swipe_refresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".ui.DetailActivity">
 
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <include
+        android:id="@+id/content"
+        layout="@layout/content_detail" />
 
-        <RelativeLayout
-            android:background="@color/colorBlack"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="16dp">
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/bookmark_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/content" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/back_button"
-                android:layout_width="wrap_content"
-                android:layout_height="38dp"
-                android:background="@drawable/custom_button"
-                android:text="@string/back"
-                android:textColor="@android:color/black"
-                app:backgroundTint="@android:color/white"
-                app:icon="@drawable/back_icon"
-                app:iconTint="@color/colorBlack" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/bookmark_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_anchor="@id/content"
+        app:layout_anchorGravity="bottom|end"
+        android:layout_margin="16dp"
+        android:contentDescription="@string/favorite"
+        app:backgroundTint="@color/colorBlack"
+        app:fabCustomSize="70dp"
+        app:srcCompat="@drawable/bookmark_border_icon"
+        app:tint="@android:color/white" />
 
-            <TextView
-                android:id="@+id/title_detail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/back_button"
-                android:layout_marginTop="22dp"
-                android:fontFamily="sans-serif"
-                android:text="Fitbit adds ECG and stress-level scanning to its Charge fitness tracker"
-                android:textColor="@android:color/white"
-                android:textSize="28sp"
-                android:textStyle="bold" />
+    <!--    <androidx.core.widget.NestedScrollView-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent">-->
 
-            <LinearLayout
-                android:id="@+id/date_view"
-                android:layout_below="@id/title_detail"
-                android:layout_marginTop="8dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+    <!--        <RelativeLayout-->
+    <!--            android:background="@color/colorBlack"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="match_parent"-->
+    <!--            android:padding="16dp">-->
 
-                <TextView
-                    android:id="@+id/date_detail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/title_detail"
-                    android:text="1 Januari 2020"
-                    android:textColor="@color/grey"
-                    android:textSize="16sp" />
+    <!--            <com.google.android.material.button.MaterialButton-->
+    <!--                android:id="@+id/back_button"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="38dp"-->
+    <!--                android:background="@drawable/custom_button"-->
+    <!--                android:text="@string/back"-->
+    <!--                android:textColor="@android:color/black"-->
+    <!--                app:backgroundTint="@android:color/white"-->
+    <!--                app:icon="@drawable/back_icon"-->
+    <!--                app:iconTint="@color/colorBlack" />-->
 
-                <ImageView
-                    android:id="@+id/circle_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/circle_icon"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_gravity="center_vertical" />
+    <!--            <TextView-->
+    <!--                android:id="@+id/title_detail"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_below="@id/back_button"-->
+    <!--                android:layout_marginTop="22dp"-->
+    <!--                android:fontFamily="sans-serif"-->
+    <!--                android:text="Fitbit adds ECG and stress-level scanning to its Charge fitness tracker"-->
+    <!--                android:textColor="@android:color/white"-->
+    <!--                android:textSize="28sp"-->
+    <!--                android:textStyle="bold" />-->
 
-                <TextView
-                    android:id="@+id/source_detail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="BBC"
-                    android:textColor="@color/grey"
-                    android:textSize="16sp" />
+    <!--            <LinearLayout-->
+    <!--                android:id="@+id/date_view"-->
+    <!--                android:layout_below="@id/title_detail"-->
+    <!--                android:layout_marginTop="8dp"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:orientation="horizontal">-->
 
-            </LinearLayout>
+    <!--                <TextView-->
+    <!--                    android:id="@+id/date_detail"-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_below="@id/title_detail"-->
+    <!--                    android:text="1 Januari 2020"-->
+    <!--                    android:textColor="@color/grey"-->
+    <!--                    android:textSize="16sp" />-->
 
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/image_detail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/date_view"
-                android:layout_marginTop="16dp"
-                android:adjustViewBounds="true"
-                android:contentDescription="@string/news_image"
-                android:scaleType="fitXY"
-                android:src="@drawable/contoh"
-                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize" />
+    <!--                <ImageView-->
+    <!--                    android:id="@+id/circle_image"-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:src="@drawable/circle_icon"-->
+    <!--                    android:layout_marginStart="8dp"-->
+    <!--                    android:layout_marginEnd="8dp"-->
+    <!--                    android:layout_gravity="center_vertical" />-->
 
-            <TextView
-                android:id="@+id/description_detail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/image_detail"
-                android:layout_marginTop="16dp"
-                android:text="Fitness band market share is undoubtedly contracting, thanks in no small part to the massive popularity of smartwatches. But 13.1 million overall shipments in Q1 2021 is nothing to sneeze at. People are still buying non-watch fitness trackers, due to their lower price and non-invasiveness. Announced this morning via the Google Keyword blog, the latest version of Fitbit’s Charge line looks to further blur the line line between the categories. The latest version of the premium fitness band adds a color touchscreen, along with ECG (heart) and EDA (stress) sensors."
-                android:textColor="@android:color/white"
-                android:textSize="18sp" />
+    <!--                <TextView-->
+    <!--                    android:id="@+id/source_detail"-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:text="BBC"-->
+    <!--                    android:textColor="@color/grey"-->
+    <!--                    android:textSize="16sp" />-->
 
-            <ImageButton
-                android:id="@+id/share_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/description_detail"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/share_icon"
-                android:contentDescription="@string/button_image" />
+    <!--            </LinearLayout>-->
 
-            <ImageButton
-                android:id="@+id/bookmark_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/description_detail"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_toStartOf="@id/share_button"
-                android:background="@drawable/bookmark_border_icon"
-                android:contentDescription="@string/button_image" />
+    <!--            <com.google.android.material.imageview.ShapeableImageView-->
+    <!--                android:id="@+id/image_detail"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_below="@id/date_view"-->
+    <!--                android:layout_marginTop="16dp"-->
+    <!--                android:adjustViewBounds="true"-->
+    <!--                android:contentDescription="@string/news_image"-->
+    <!--                android:scaleType="fitXY"-->
+    <!--                android:src="@drawable/contoh"-->
+    <!--                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize" />-->
 
-        </RelativeLayout>
-    </androidx.core.widget.NestedScrollView>
+    <!--            <TextView-->
+    <!--                android:id="@+id/description_detail"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_below="@id/image_detail"-->
+    <!--                android:layout_marginTop="16dp"-->
+    <!--                android:text="Fitness band market share is undoubtedly contracting, thanks in no small part to the massive popularity of smartwatches. But 13.1 million overall shipments in Q1 2021 is nothing to sneeze at. People are still buying non-watch fitness trackers, due to their lower price and non-invasiveness. Announced this morning via the Google Keyword blog, the latest version of Fitbit’s Charge line looks to further blur the line line between the categories. The latest version of the premium fitness band adds a color touchscreen, along with ECG (heart) and EDA (stress) sensors."-->
+    <!--                android:textColor="@android:color/white"-->
+    <!--                android:textSize="18sp" />-->
 
-</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    <!--            <ImageButton-->
+    <!--                android:id="@+id/share_button"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_below="@id/description_detail"-->
+    <!--                android:layout_alignParentEnd="true"-->
+    <!--                android:layout_marginTop="16dp"-->
+    <!--                android:background="@drawable/share_icon"-->
+    <!--                android:contentDescription="@string/button_image" />-->
+
+    <!--            <ImageButton-->
+    <!--                android:id="@+id/bookmark_button"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_below="@id/description_detail"-->
+    <!--                android:layout_marginTop="16dp"-->
+    <!--                android:layout_marginEnd="16dp"-->
+    <!--                android:layout_toStartOf="@id/share_button"-->
+    <!--                android:background="@drawable/bookmark_border_icon"-->
+    <!--                android:contentDescription="@string/button_image" />-->
+
+    <!--        </RelativeLayout>-->
+    <!--    </androidx.core.widget.NestedScrollView>-->
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -18,7 +18,7 @@ class NewsRepository(
     private val appExecutors: AppExecutors
 ) : INewsRepository {
 
-    override fun loadAllNews(): LiveData<Resource<PagedList<NewsEntity>>> =
+    override fun loadAllNews(search: String): LiveData<Resource<PagedList<NewsEntity>>> =
         object : NetworkBoundResource<PagedList<NewsEntity>, List<NewsResponse>>(appExecutors) {
             override fun loadFromDB(): LiveData<PagedList<NewsEntity>> {
                 val config = PagedList.Config.Builder()
@@ -33,7 +33,7 @@ class NewsRepository(
                 data == null || data.isEmpty()
 
             override fun createCall(): LiveData<ApiResponse<List<NewsResponse>>> =
-                remoteDataSource.getAllNews()
+                remoteDataSource.getAllNews(search)
 
             override fun saveCallResult(data: List<NewsResponse>) {
                 val newsList = DataMapper.mapResponseToEntities(data)

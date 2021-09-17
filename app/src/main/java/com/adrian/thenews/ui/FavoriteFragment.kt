@@ -2,11 +2,9 @@ package com.adrian.thenews.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.adrian.thenews.R
@@ -37,21 +35,27 @@ class FavoriteFragment : Fragment() {
             rv_favorite.setHasFixedSize(true)
             rv_favorite.adapter = bookmarkAdapter
         }
-
     }
 
     private fun setDataToAdapter() {
         bookmarkViewModel.bookmarkNews.observe(viewLifecycleOwner, {
-            if (it.isEmpty()) {
-                Log.e("Bookmark", it.toString())
+            if (it.isNotEmpty()) {
                 bookmarkAdapter.submitList(it)
                 bookmarkAdapter.setData(it)
                 bookmarkAdapter.onItemClick = {
                     val intent = Intent(activity, DetailActivity::class.java)
+                    intent.putExtra(DetailActivity.NEWS_ID, it.newsId)
+                    intent.putExtra(DetailActivity.NEWS_TITLE, it.newsTitle)
+                    intent.putExtra(DetailActivity.NEWS_SOURCE, it.sourceNews)
+                    intent.putExtra(DetailActivity.NEWS_DATE, it.publishDate)
+                    intent.putExtra(DetailActivity.NEWS_DESC, it.newsDescription)
+                    intent.putExtra(DetailActivity.NEWS_CONTENT, it.content)
+                    intent.putExtra(DetailActivity.NEWS_URL, it.url)
+                    intent.putExtra(DetailActivity.NEWS_IMAGE, it.imageUrl)
+                    intent.putExtra(DetailActivity.NEWS_STATUS, it.isFavorite)
                     startActivity(intent)
                 }
             } else {
-                Toast.makeText(activity, "null", Toast.LENGTH_SHORT).show()
                 empty_view.visibility = View.VISIBLE
             }
         })

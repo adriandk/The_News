@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
-import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -41,13 +40,21 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         if (activity != null) {
             newsAdapter = HomeAdapter()
-            newsViewModel.news.observe(viewLifecycleOwner, newsObserver)
+
+            getData("corona")
+            swipe_refresh.setOnRefreshListener {
+                getData("corona")
+                swipe_refresh.isRefreshing = false
+            }
 
             rv_news.layoutManager = LinearLayoutManager(context)
             rv_news.setHasFixedSize(true)
             rv_news.adapter = newsAdapter
         }
+    }
 
+    private fun getData(search: String) {
+        newsViewModel.news(search).observe(viewLifecycleOwner, newsObserver)
     }
 
     private val newsObserver = Observer<Resource<PagedList<NewsEntity>>> {
@@ -62,6 +69,15 @@ class HomeFragment : Fragment() {
                     error_view.visibility = View.GONE
                     newsAdapter.onItemClick = {
                         val intent = Intent(activity, DetailActivity::class.java)
+                        intent.putExtra(DetailActivity.NEWS_ID, it.newsId)
+                        intent.putExtra(DetailActivity.NEWS_TITLE, it.newsTitle)
+                        intent.putExtra(DetailActivity.NEWS_SOURCE, it.sourceNews)
+                        intent.putExtra(DetailActivity.NEWS_DATE, it.publishDate)
+                        intent.putExtra(DetailActivity.NEWS_DESC, it.newsDescription)
+                        intent.putExtra(DetailActivity.NEWS_CONTENT, it.content)
+                        intent.putExtra(DetailActivity.NEWS_URL, it.url)
+                        intent.putExtra(DetailActivity.NEWS_IMAGE, it.imageUrl)
+                        intent.putExtra(DetailActivity.NEWS_STATUS, it.isFavorite)
                         startActivity(intent)
                     }
                 }
@@ -81,19 +97,26 @@ class HomeFragment : Fragment() {
 
         searchView.setSearchableInfo(searchManager.getSearchableInfo(activity?.componentName))
 
-        searchView.queryHint = "YO NDA TAU"
+        searchView.queryHint = "Search Hot News"
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                Toast.makeText(activity, "$query", Toast.LENGTH_SHORT).show()
+                newsViewModel.news(query.toString()).observe(viewLifecycleOwner, newsObserver)
                 return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                Toast.makeText(activity, "$newText", Toast.LENGTH_SHORT).show()
                 return true
             }
 
         })
+    }
+
+    private fun setStatusBookmark(bookmarkStatus: Boolean) {
+        if (bookmarkStatus) {
+
+        } else {
+
+        }
     }
 
 }

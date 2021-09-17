@@ -10,7 +10,7 @@
 
     <item
         android:id="@+id/favorite"
-        android:title="@string/favorite"
+        android:title="@string/bookmark"
         app:showAsAction="always"
         android:icon="@drawable/bookmark_icon" />
 

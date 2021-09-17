@@ -9,12 +9,6 @@ interface ApiService {
 
     @GET("v2/everything")
     fun getNews(
-        @Query("sources") search: String,
-        @Query("apiKey") api: String
-    ): Call<ListNewsResponse>
-
-    @GET("v2/everything")
-    fun searchNews(
         @Query("q") search: String,
         @Query("apiKey") api: String
     ): Call<ListNewsResponse>

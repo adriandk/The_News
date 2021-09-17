@@ -11,6 +11,7 @@ object DataMapper {
             val news = NewsEntity(
                 newsId = null,
                 newsTitle = newsData.title,
+                sourceNews = newsData.source.sourceName,
                 newsDescription = newsData.description,
                 url = newsData.url,
                 imageUrl = newsData.imageUrl,
@@ -26,6 +27,7 @@ object DataMapper {
     fun mapResponseToEntity(input: NewsResponse) = NewsEntity(
         newsId = null,
         newsTitle = input.title,
+        sourceNews = input.source.sourceName,
         newsDescription = input.description,
         url = input.url,
         imageUrl = input.imageUrl,

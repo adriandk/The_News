@@ -6,6 +6,9 @@ data class NewsResponse(
     @field:SerializedName("title")
     val title: String?,
 
+    @field:SerializedName("source")
+    val source: SourceResponse,
+
     @field:SerializedName("description")
     val description: String?,
 
@@ -20,4 +23,12 @@ data class NewsResponse(
 
     @field:SerializedName("content")
     val content: String?
+)
+
+data class SourceResponse(
+    @field:SerializedName("id")
+    val id: String?,
+
+    @field:SerializedName("name")
+    val sourceName: String?
 )

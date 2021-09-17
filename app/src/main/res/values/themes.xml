@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.TheNews" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.TheNews" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/barColor</item>
         <item name="colorPrimaryVariant">@color/colorBlack</item>
@@ -18,9 +18,14 @@
         <item name="android:editTextColor">@android:color/white</item>
     </style>
 
-    <style name="Thenews.AppBarOverlay" parent="ThemeOverlay.AppCompat.DayNight.ActionBar" />
+    <style name="Thenews.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Thenews.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="Theme.TheNews.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 
     <style name="ShapeAppearanceOverlay.App.CornerSize" parent="">
         <item name="cornerSize">8%</item>

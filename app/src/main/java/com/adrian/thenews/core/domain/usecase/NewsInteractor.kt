@@ -5,7 +5,8 @@ import com.adrian.thenews.core.domain.repository.INewsRepository
 
 class NewsInteractor(private val newsRepository: INewsRepository) : NewsUseCase {
 
-    override fun loadAllNews() = newsRepository.loadAllNews()
+    override fun loadAllNews(search: String) = newsRepository.loadAllNews(search)
+
     override fun getBookmarkNews() = newsRepository.getBookmarkNews()
 
     override fun setBookmarkNews(news: NewsEntity, state: Boolean) {

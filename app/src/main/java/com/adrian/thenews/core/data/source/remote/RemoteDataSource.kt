@@ -14,37 +14,18 @@ import retrofit2.Response
 
 class RemoteDataSource(private val apiService: ApiService) {
 
-    fun getAllNews(): LiveData<ApiResponse<List<NewsResponse>>> {
+    fun getAllNews(search: String): LiveData<ApiResponse<List<NewsResponse>>> {
         val newsList = MutableLiveData<ApiResponse<List<NewsResponse>>>()
 
-        apiService.getNews("bbc-news", API_KEY)
+        apiService.getNews(search, API_KEY)
             .enqueue(object : Callback<ListNewsResponse> {
                 override fun onResponse(
                     call: Call<ListNewsResponse>,
                     response: Response<ListNewsResponse>
                 ) {
+                    Log.e("RemoteDataSource", search)
                     newsList.value =
                         ApiResponse.Success(response.body()!!.news)
-                }
-
-                override fun onFailure(call: Call<ListNewsResponse>, t: Throwable) {
-                    Log.e("RemoteDataSource", t.message.toString())
-                }
-            })
-        return newsList
-    }
-
-    fun getSearchNews(search: String): LiveData<ApiResponse<List<NewsResponse>>> {
-        val newsList = MutableLiveData<ApiResponse<List<NewsResponse>>>()
-
-        apiService.searchNews(search, API_KEY)
-            .enqueue(object : Callback<ListNewsResponse> {
-                override fun onResponse(
-                    call: Call<ListNewsResponse>,
-                    response: Response<ListNewsResponse>
-                ) {
-                    newsList.value =
-                        ApiResponse.Success(response.body()?.news as List<NewsResponse>)
                 }
 
                 override fun onFailure(call: Call<ListNewsResponse>, t: Throwable) {
