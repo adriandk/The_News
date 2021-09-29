@@ -3,12 +3,14 @@ package com.adrian.thenews.ui
 import android.annotation.SuppressLint
 import android.net.http.SslError
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.webkit.SslErrorHandler
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.adrian.thenews.R
@@ -74,8 +76,10 @@ class DetailActivity : AppCompatActivity() {
         setBookmarkStatus(bookmarkStatus)
         bookmark_button.setOnClickListener {
             bookmarkStatus = !bookmarkStatus
-            detailViewModel.setBookmarkNews(dataNews, bookmarkStatus)
-            setBookmarkStatus(bookmarkStatus)
+//            Toast.makeText(this, "$dataNews", Toast.LENGTH_SHORT).show()
+            Log.e("DetailActivity", "$dataNews")
+//            detailViewModel.setBookmarkNews(dataNews, bookmarkStatus)
+//            setBookmarkStatus(bookmarkStatus)
         }
 
         initWebView()

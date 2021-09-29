@@ -1,5 +1,6 @@
 package com.adrian.thenews.core.data.source.local
 
+import android.util.Log
 import androidx.paging.DataSource
 import com.adrian.thenews.core.data.source.local.entity.NewsEntity
 import com.adrian.thenews.core.data.source.local.room.NewsDao
@@ -17,5 +18,6 @@ class LocalDataSource(private val newsDao: NewsDao) {
     fun setBookmarkNews(news: NewsEntity, newState: Boolean) {
         news.isFavorite = newState
         newsDao.updateFavoriteNews(news)
+        Log.e("LocalDataSource", "$news")
     }
 }
