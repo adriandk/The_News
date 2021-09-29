@@ -1,6 +1,6 @@
 package com.adrian.thenews.core.domain.usecase
 
-import com.adrian.thenews.core.data.source.local.entity.NewsEntity
+import com.adrian.thenews.core.domain.model.News
 import com.adrian.thenews.core.domain.repository.INewsRepository
 
 class NewsInteractor(private val newsRepository: INewsRepository) : NewsUseCase {
@@ -9,7 +9,7 @@ class NewsInteractor(private val newsRepository: INewsRepository) : NewsUseCase 
 
     override fun getBookmarkNews() = newsRepository.getBookmarkNews()
 
-    override fun setBookmarkNews(news: NewsEntity, state: Boolean) {
+    override fun setBookmarkNews(news: News, state: Boolean) {
         newsRepository.setBookmarkNews(news, state)
     }
 }

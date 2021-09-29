@@ -1,11 +1,11 @@
-package com.adrian.thenews.core.domain
+package com.adrian.thenews.core.domain.model
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class News(
-    val newsId: Int,
+    val newsId: Int?,
     val newsTitle: String?,
     val sourceNews: String?,
     val newsDescription: String?,

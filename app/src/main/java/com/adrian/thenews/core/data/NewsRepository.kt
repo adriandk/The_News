@@ -1,16 +1,16 @@
 package com.adrian.thenews.core.data
 
 import androidx.lifecycle.LiveData
-import androidx.paging.LivePagedListBuilder
-import androidx.paging.PagedList
 import com.adrian.thenews.core.data.source.local.LocalDataSource
 import com.adrian.thenews.core.data.source.local.entity.NewsEntity
 import com.adrian.thenews.core.data.source.remote.RemoteDataSource
 import com.adrian.thenews.core.data.source.remote.network.ApiResponse
 import com.adrian.thenews.core.data.source.remote.response.NewsResponse
+import com.adrian.thenews.core.domain.model.News
 import com.adrian.thenews.core.domain.repository.INewsRepository
 import com.adrian.thenews.core.utils.AppExecutors
 import com.adrian.thenews.core.utils.DataMapper
+import kotlinx.coroutines.flow.Flow
 
 class NewsRepository(
     private val remoteDataSource: RemoteDataSource,
@@ -18,44 +18,31 @@ class NewsRepository(
     private val appExecutors: AppExecutors
 ) : INewsRepository {
 
-    override fun loadAllNews(search: String): LiveData<Resource<PagedList<NewsEntity>>> =
-        object : NetworkBoundResource<PagedList<NewsEntity>, List<NewsResponse>>(appExecutors) {
-            override fun loadFromDB(): LiveData<PagedList<NewsEntity>> {
-                val config = PagedList.Config.Builder()
-                    .setEnablePlaceholders(false)
-                    .setInitialLoadSizeHint(20)
-                    .setPageSize(20)
-                    .build()
-                return LivePagedListBuilder(localDataSource.getAllNews(), config).build()
+    override fun loadAllNews(search: String): Flow<Resource<List<News>>> =
+        object: NetworkBoundResource<List<News>, List<NewsResponse>>() {
+            override fun loadFromDB(): Flow<List<News>> {
+                TODO("Not yet implemented")
             }
 
-            override fun shouldFetch(data: PagedList<NewsEntity>?): Boolean =
-                data == null || data.isEmpty()
-
-            override fun createCall(): LiveData<ApiResponse<List<NewsResponse>>> =
-                remoteDataSource.getAllNews(search)
-
-            override fun saveCallResult(data: List<NewsResponse>) {
-                val newsList = DataMapper.mapResponseToEntities(data)
-                localDataSource.insertNews(newsList)
+            override fun shouldFetch(data: List<News>?): Boolean {
+                TODO("Not yet implemented")
             }
 
-        }.asLiveData()
+            override suspend fun createCall(): Flow<ApiResponse<List<NewsResponse>>> {
+                TODO("Not yet implemented")
+            }
 
-    override fun getBookmarkNews(): LiveData<PagedList<NewsEntity>> {
-        val config = PagedList.Config.Builder()
-            .setEnablePlaceholders(false)
-            .setInitialLoadSizeHint(5)
-            .setPageSize(5)
-            .build()
-        return LivePagedListBuilder(localDataSource.getBookmarkNews(), config).build()
+            override suspend fun saveCallResult(data: List<NewsResponse>) {
+                TODO("Not yet implemented")
+            }
+        }.asFlow()
+
+    override fun getBookmarkNews(): Flow<List<News>> {
+        TODO("Not yet implemented")
     }
 
-    override fun setBookmarkNews(news: NewsEntity, state: Boolean) {
-        appExecutors.diskIO().execute {
-            localDataSource.setBookmarkNews(news, state)
-        }
+    override fun setBookmarkNews(news: News, state: Boolean) {
+        TODO("Not yet implemented")
     }
-
 
 }
