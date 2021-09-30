@@ -13,7 +13,6 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import java.lang.Exception
 
-
 class RemoteDataSource(private val apiService: ApiService) {
 
     suspend fun getALlNews(search: String): Flow<ApiResponse<List<NewsResponse>>> {

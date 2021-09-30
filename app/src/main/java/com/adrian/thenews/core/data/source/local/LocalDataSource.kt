@@ -17,6 +17,5 @@ class LocalDataSource(private val newsDao: NewsDao) {
     fun setBookmarkNews(news: NewsEntity, newState: Boolean) {
         news.isFavorite = newState
         newsDao.updateFavoriteNews(news)
-        Log.e("LocalDataSource", "$news")
     }
 }
