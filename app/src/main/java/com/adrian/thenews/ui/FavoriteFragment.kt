@@ -40,19 +40,10 @@ class FavoriteFragment : Fragment() {
     private fun setDataToAdapter() {
         bookmarkViewModel.bookmarkNews.observe(viewLifecycleOwner, {
             if (it.isNotEmpty()) {
-                bookmarkAdapter.submitList(it)
                 bookmarkAdapter.setData(it)
                 bookmarkAdapter.onItemClick = {
                     val intent = Intent(activity, DetailActivity::class.java)
-                    intent.putExtra(DetailActivity.NEWS_ID, it.newsId)
-                    intent.putExtra(DetailActivity.NEWS_TITLE, it.newsTitle)
-                    intent.putExtra(DetailActivity.NEWS_SOURCE, it.sourceNews)
-                    intent.putExtra(DetailActivity.NEWS_DATE, it.publishDate)
-                    intent.putExtra(DetailActivity.NEWS_DESC, it.newsDescription)
-                    intent.putExtra(DetailActivity.NEWS_CONTENT, it.content)
-                    intent.putExtra(DetailActivity.NEWS_URL, it.url)
-                    intent.putExtra(DetailActivity.NEWS_IMAGE, it.imageUrl)
-                    intent.putExtra(DetailActivity.NEWS_STATUS, it.isFavorite)
+                    intent.putExtra(DetailActivity.NEWS_DATA, it)
                     startActivity(intent)
                 }
             } else {

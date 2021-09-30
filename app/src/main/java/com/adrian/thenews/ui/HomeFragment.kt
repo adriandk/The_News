@@ -2,18 +2,14 @@ package com.adrian.thenews.ui
 
 import android.app.SearchManager
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.adrian.thenews.R
 import com.adrian.thenews.core.adapter.HomeAdapter
 import com.adrian.thenews.core.data.Resource
-import com.adrian.thenews.core.data.source.local.entity.NewsEntity
 import com.adrian.thenews.core.viewmodel.NewsViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -54,39 +50,25 @@ class HomeFragment : Fragment() {
     }
 
     private fun getData(search: String) {
-        newsViewModel.news(search).observe(viewLifecycleOwner, newsObserver)
-    }
-
-    private val newsObserver = Observer<Resource<PagedList<NewsEntity>>> {
-        if (it != null) {
-            when (it) {
-                is Resource.Loading -> loading_view.visibility = View.VISIBLE
-                is Resource.Success -> {
-                    newsAdapter.submitList(it.data)
-                    newsAdapter.setData(it.data)
-                    rv_news.visibility = View.VISIBLE
-                    loading_view.visibility = View.GONE
-                    error_view.visibility = View.GONE
-                    newsAdapter.onItemClick = {
-                        val intent = Intent(activity, DetailActivity::class.java)
-                        intent.putExtra(DetailActivity.NEWS_ID, it.newsId)
-                        intent.putExtra(DetailActivity.NEWS_TITLE, it.newsTitle)
-                        intent.putExtra(DetailActivity.NEWS_SOURCE, it.sourceNews)
-                        intent.putExtra(DetailActivity.NEWS_DATE, it.publishDate)
-                        intent.putExtra(DetailActivity.NEWS_DESC, it.newsDescription)
-                        intent.putExtra(DetailActivity.NEWS_CONTENT, it.content)
-                        intent.putExtra(DetailActivity.NEWS_URL, it.url)
-                        intent.putExtra(DetailActivity.NEWS_IMAGE, it.imageUrl)
-                        intent.putExtra(DetailActivity.NEWS_STATUS, it.isFavorite)
-                        startActivity(intent)
+        newsViewModel.news(search).observe(viewLifecycleOwner, { news ->
+            if (news != null) {
+                when (news) {
+                    is Resource.Loading -> {
+                        loading_view.visibility = View.VISIBLE
+                        error_view.visibility = View.GONE
+                    }
+                    is Resource.Error -> {
+                        loading_view.visibility = View.GONE
+                        error_view.visibility = View.VISIBLE
+                    }
+                    is Resource.Success -> {
+                        loading_view.visibility = View.GONE
+                        error_view.visibility = View.GONE
+                        newsAdapter.setData(news.data)
                     }
                 }
-                is Resource.Error -> {
-                    error_view.visibility = View.VISIBLE
-                    loading_view.visibility = View.GONE
-                }
             }
-        }
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -100,7 +82,7 @@ class HomeFragment : Fragment() {
         searchView.queryHint = "Search Hot News"
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                newsViewModel.news(query.toString()).observe(viewLifecycleOwner, newsObserver)
+                getData(query.toString())
                 return true
             }
 
@@ -109,14 +91,6 @@ class HomeFragment : Fragment() {
             }
 
         })
-    }
-
-    private fun setStatusBookmark(bookmarkStatus: Boolean) {
-        if (bookmarkStatus) {
-
-        } else {
-
-        }
     }
 
 }

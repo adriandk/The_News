@@ -9,7 +9,7 @@ object Formatter {
     @SuppressLint("SimpleDateFormat")
     fun getDate(date: String): String? {
         val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
-        val yearFormat = SimpleDateFormat("dd-MMMM-yyyy")
+        val yearFormat = SimpleDateFormat("dd MMMM yyyy")
         return simpleDateFormat.parse(date)?.let { yearFormat.format(it) }
     }
 

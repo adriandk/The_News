@@ -11,9 +11,8 @@ class LocalDataSource(private val newsDao: NewsDao) {
 
     fun getBookmarkNews(): Flow<List<NewsEntity>> = newsDao.getBookmarkNews()
 
-    fun insertNews(newsList: List<NewsEntity>) {
+    suspend fun insertNews(newsList: List<NewsEntity>) =
         newsDao.insertNews(newsList)
-    }
 
     fun setBookmarkNews(news: NewsEntity, newState: Boolean) {
         news.isFavorite = newState
