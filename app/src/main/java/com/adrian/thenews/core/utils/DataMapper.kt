@@ -2,6 +2,7 @@ package com.adrian.thenews.core.utils
 
 import com.adrian.thenews.core.data.source.local.entity.NewsEntity
 import com.adrian.thenews.core.data.source.remote.response.NewsResponse
+import com.adrian.thenews.core.domain.model.News
 
 object DataMapper {
 
@@ -24,15 +25,30 @@ object DataMapper {
         return newsList
     }
 
-    fun mapResponseToEntity(input: NewsResponse) = NewsEntity(
-        newsId = null,
-        newsTitle = input.title,
-        sourceNews = input.source.sourceName,
-        newsDescription = input.description,
+    fun mapEntitiesToDomain(input: List<NewsEntity>): List<News> =
+        input.map {
+            News(
+                newsId = it.newsId,
+                newsTitle = it.newsTitle,
+                sourceNews = it.sourceNews,
+                newsDescription = it.newsDescription,
+                url = it.url,
+                imageUrl = it.imageUrl,
+                publishDate = it.publishDate,
+                content = it.content,
+                isFavorite = it.isFavorite
+            )
+        }
+
+    fun mapDomainToEntity(input: News) = NewsEntity(
+        newsId = input.newsId,
+        newsTitle = input.newsTitle,
+        sourceNews = input.sourceNews,
+        newsDescription = input.newsDescription,
         url = input.url,
         imageUrl = input.imageUrl,
         publishDate = input.publishDate,
         content = input.content,
-        isFavorite = false
+        isFavorite = input.isFavorite
     )
 }

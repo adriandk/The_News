@@ -6,33 +6,33 @@ import androidx.lifecycle.MutableLiveData
 import com.adrian.thenews.BuildConfig.API_KEY
 import com.adrian.thenews.core.data.source.remote.network.ApiResponse
 import com.adrian.thenews.core.data.source.remote.network.ApiService
-import com.adrian.thenews.core.data.source.remote.response.ListNewsResponse
 import com.adrian.thenews.core.data.source.remote.response.NewsResponse
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import java.lang.Exception
 
 class RemoteDataSource(private val apiService: ApiService) {
 
-    fun getAllNews(search: String): LiveData<ApiResponse<List<NewsResponse>>> {
-        val newsList = MutableLiveData<ApiResponse<List<NewsResponse>>>()
+    suspend fun getALlNews(search: String): Flow<ApiResponse<List<NewsResponse>>> {
+        return flow {
+            try {
+                val response = apiService.getNews(search, API_KEY)
+                val dataArray = response.news
 
-        apiService.getNews(search, API_KEY)
-            .enqueue(object : Callback<ListNewsResponse> {
-                override fun onResponse(
-                    call: Call<ListNewsResponse>,
-                    response: Response<ListNewsResponse>
-                ) {
-                    Log.e("RemoteDataSource", search)
-                    newsList.value =
-                        ApiResponse.Success(response.body()!!.news)
+                if (dataArray.isNotEmpty()) {
+                    emit(ApiResponse.Success(response.news))
+                } else {
+                    emit(ApiResponse.Empty)
                 }
 
-                override fun onFailure(call: Call<ListNewsResponse>, t: Throwable) {
-                    Log.e("RemoteDataSource", t.message.toString())
-                }
-            })
-        return newsList
+            } catch (e: Exception) {
+                Log.e("remote data source", "failed")
+                emit(ApiResponse.Error(e.toString()))
+                Log.e("Remote Data", e.toString())
+            }
+        }.flowOn(Dispatchers.IO)
     }
 
 }
