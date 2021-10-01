@@ -3,6 +3,7 @@ package com.adrian.thenews.ui
 import android.app.SearchManager
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
@@ -52,18 +53,22 @@ class HomeFragment : Fragment() {
     private fun getData(search: String) {
         newsViewModel.news(search).observe(viewLifecycleOwner, { news ->
             if (news != null) {
+                Log.e("HomeFragment", news.data.toString())
                 when (news) {
                     is Resource.Loading -> {
                         loading_view.visibility = View.VISIBLE
                         error_view.visibility = View.GONE
+                        rv_news.visibility = View.GONE
                     }
                     is Resource.Error -> {
                         loading_view.visibility = View.GONE
                         error_view.visibility = View.VISIBLE
+                        rv_news.visibility = View.GONE
                     }
                     is Resource.Success -> {
                         loading_view.visibility = View.GONE
                         error_view.visibility = View.GONE
+                        rv_news.visibility = View.VISIBLE
                         newsAdapter.setData(news.data)
                     }
                 }
