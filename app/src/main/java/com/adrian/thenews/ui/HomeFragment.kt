@@ -2,6 +2,7 @@ package com.adrian.thenews.ui
 
 import android.app.SearchManager
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -42,6 +43,12 @@ class HomeFragment : Fragment() {
             swipe_refresh.setOnRefreshListener {
                 getData("corona")
                 swipe_refresh.isRefreshing = false
+            }
+
+            newsAdapter.onItemClick = {
+                val intent = Intent(activity, DetailActivity::class.java)
+                intent.putExtra(DetailActivity.NEWS_DATA, it)
+                startActivity(intent)
             }
 
             rv_news.layoutManager = LinearLayoutManager(context)

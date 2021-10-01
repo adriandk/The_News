@@ -46,7 +46,10 @@ class FavoriteFragment : Fragment() {
                     intent.putExtra(DetailActivity.NEWS_DATA, it)
                     startActivity(intent)
                 }
+                empty_view.visibility = View.GONE
+                rv_favorite.visibility = View.VISIBLE
             } else {
+                rv_favorite.visibility = View.GONE
                 empty_view.visibility = View.VISIBLE
             }
         })

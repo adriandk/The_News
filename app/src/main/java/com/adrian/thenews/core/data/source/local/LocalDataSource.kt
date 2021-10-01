@@ -1,6 +1,5 @@
 package com.adrian.thenews.core.data.source.local
 
-import android.util.Log
 import com.adrian.thenews.core.data.source.local.entity.NewsEntity
 import com.adrian.thenews.core.data.source.local.room.NewsDao
 import kotlinx.coroutines.flow.Flow
