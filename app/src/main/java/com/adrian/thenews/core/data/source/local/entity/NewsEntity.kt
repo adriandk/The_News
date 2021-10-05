@@ -1,15 +1,12 @@
 package com.adrian.thenews.core.data.source.local.entity
 
+import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "news")
 data class NewsEntity(
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "newsId")
-    var newsId: Int?,
-
     @ColumnInfo(name = "newsTitle")
     var newsTitle: String?,
 
@@ -19,8 +16,10 @@ data class NewsEntity(
     @ColumnInfo(name = "description")
     var newsDescription: String?,
 
+    @NonNull
+    @PrimaryKey
     @ColumnInfo(name = "url")
-    var url: String?,
+    var url: String,
 
     @ColumnInfo(name = "urlToImage")
     var imageUrl: String?,

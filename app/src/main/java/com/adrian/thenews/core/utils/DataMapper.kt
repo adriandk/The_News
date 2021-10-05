@@ -10,7 +10,6 @@ object DataMapper {
         val newsList = ArrayList<NewsEntity>()
         input.map { newsData ->
             val news = NewsEntity(
-                newsId = null,
                 newsTitle = newsData.title,
                 sourceNews = newsData.source.sourceName,
                 newsDescription = newsData.description,
@@ -28,7 +27,6 @@ object DataMapper {
     fun mapEntitiesToDomain(input: List<NewsEntity>): List<News> =
         input.map {
             News(
-                newsId = it.newsId,
                 newsTitle = it.newsTitle,
                 sourceNews = it.sourceNews,
                 newsDescription = it.newsDescription,
@@ -41,7 +39,6 @@ object DataMapper {
         }
 
     fun mapDomainToEntity(input: News) = NewsEntity(
-        newsId = input.newsId,
         newsTitle = input.newsTitle,
         sourceNews = input.sourceNews,
         newsDescription = input.newsDescription,

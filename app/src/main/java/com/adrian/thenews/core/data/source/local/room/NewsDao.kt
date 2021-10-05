@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface NewsDao {
 
-    @Query("SELECT * FROM news")
+    @Query("SELECT * FROM news ")
     fun getAllNews(): Flow<List<NewsEntity>>
 
     @Query("SELECT * FROM news where isFavorite = 1")

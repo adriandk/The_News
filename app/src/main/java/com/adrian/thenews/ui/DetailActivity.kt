@@ -1,20 +1,18 @@
 package com.adrian.thenews.ui
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.net.http.SslError
 import android.os.Bundle
-import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.webkit.SslErrorHandler
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.ProgressBar
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.adrian.thenews.R
-import com.adrian.thenews.core.data.source.local.entity.NewsEntity
 import com.adrian.thenews.core.domain.model.News
 import com.adrian.thenews.core.viewmodel.DetailViewModel
 import kotlinx.android.synthetic.main.activity_detail.*
@@ -43,9 +41,26 @@ class DetailActivity : AppCompatActivity() {
             setBookmarkStatus(bookmarkStatus)
         }
 
+        share_button.setOnClickListener {
+            shareNews(newsData)
+        }
+
         initWebView()
         AppWebViewClients(progress_bar)
-        loadUrl(newsData.url.toString())
+        loadUrl(newsData.url)
+    }
+
+    private fun shareNews(newsData: News) {
+        val share = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(
+                Intent.EXTRA_TEXT,
+                "${newsData.newsTitle}, ${newsData.url}, Source of News : ${newsData.sourceNews}"
+            )
+            type = "text/html"
+        }
+        val shareIntent = Intent.createChooser(share, null)
+        startActivity(shareIntent)
     }
 
     @SuppressLint("SetJavaScriptEnabled")
