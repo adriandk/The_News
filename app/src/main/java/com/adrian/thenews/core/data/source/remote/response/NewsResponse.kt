@@ -13,7 +13,7 @@ data class NewsResponse(
     val description: String?,
 
     @field:SerializedName("url")
-    val url: String?,
+    val url: String,
 
     @field:SerializedName("urlToImage")
     val imageUrl: String?,
