@@ -8,6 +8,8 @@ class LocalDataSource(private val newsDao: NewsDao) {
 
     fun getAllNews(): Flow<List<NewsEntity>> = newsDao.getAllNews()
 
+    fun searchNews(search: String): Flow<List<NewsEntity>> = newsDao.searchData(search)
+
     fun getBookmarkNews(): Flow<List<NewsEntity>> = newsDao.getBookmarkNews()
 
     suspend fun insertNews(newsList: List<NewsEntity>) =

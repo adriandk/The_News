@@ -39,9 +39,9 @@ class HomeFragment : Fragment() {
         if (activity != null) {
             newsAdapter = HomeAdapter()
 
-            getData("corona")
+            getData("corona", false)
             swipe_refresh.setOnRefreshListener {
-                getData("corona")
+                getData("corona", false)
                 swipe_refresh.isRefreshing = false
             }
 
@@ -57,10 +57,10 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun getData(search: String) {
+    private fun getData(search: String, type: Boolean) {
+        Log.e("HomeFragment", type.toString())
         newsViewModel.news(search).observe(viewLifecycleOwner, { news ->
             if (news != null) {
-                Log.e("HomeFragment", news.data.toString())
                 when (news) {
                     is Resource.Loading -> {
                         loading_view.visibility = View.VISIBLE
@@ -94,7 +94,7 @@ class HomeFragment : Fragment() {
         searchView.queryHint = "Search Hot News"
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                getData(query.toString())
+                getData(query.toString(), true)
                 return true
             }
 

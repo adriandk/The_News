@@ -1,5 +1,6 @@
 package com.adrian.thenews.core.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,9 +18,11 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
     var onItemClick: ((News) ->  Unit)? = null
 
     fun setData(newListData: List<News>?) {
+        newsList.clear()
         if(newListData == null) return
         newsList.clear()
         newsList.addAll(newListData)
+        Log.e("HomeAdapter", newListData.toString())
         notifyDataSetChanged()
     }
 
