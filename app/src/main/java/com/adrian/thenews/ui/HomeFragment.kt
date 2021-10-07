@@ -38,19 +38,16 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         if (activity != null) {
             newsAdapter = HomeAdapter()
-
             getData("corona", false)
             swipe_refresh.setOnRefreshListener {
                 getData("corona", false)
                 swipe_refresh.isRefreshing = false
             }
-
             newsAdapter.onItemClick = {
                 val intent = Intent(activity, DetailActivity::class.java)
                 intent.putExtra(DetailActivity.NEWS_DATA, it)
                 startActivity(intent)
             }
-
             rv_news.layoutManager = LinearLayoutManager(context)
             rv_news.setHasFixedSize(true)
             rv_news.adapter = newsAdapter
@@ -58,7 +55,6 @@ class HomeFragment : Fragment() {
     }
 
     private fun getData(search: String, type: Boolean) {
-        Log.e("HomeFragment", type.toString())
         newsViewModel.news(search).observe(viewLifecycleOwner, { news ->
             if (news != null) {
                 when (news) {
@@ -76,7 +72,18 @@ class HomeFragment : Fragment() {
                         loading_view.visibility = View.GONE
                         error_view.visibility = View.GONE
                         rv_news.visibility = View.VISIBLE
-                        newsAdapter.setData(news.data)
+                        if (type) {
+                            newsViewModel.searchNews(search).observe(viewLifecycleOwner, {
+                                Log.e("HomeFragment", it.toString())
+                                if (it.isNotEmpty()) {
+                                    newsAdapter.setData(it)
+                                } else {
+                                    newsAdapter.setData(news.data)
+                                }
+                            })
+                        } else {
+                            newsAdapter.setData(news.data)
+                        }
                     }
                 }
             }
