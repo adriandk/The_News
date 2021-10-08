@@ -59,7 +59,7 @@ class DetailActivity : AppCompatActivity() {
             )
             type = "text/html"
         }
-        val shareIntent = Intent.createChooser(share, null)
+        val shareIntent = Intent.createChooser(share, "Share news to...")
         startActivity(shareIntent)
     }
 

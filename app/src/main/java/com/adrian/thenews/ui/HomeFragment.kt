@@ -38,29 +38,25 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         if (activity != null) {
             newsAdapter = HomeAdapter()
-
-            getData("corona")
+            getData("corona", false)
             swipe_refresh.setOnRefreshListener {
-                getData("corona")
+                getData("corona", false)
                 swipe_refresh.isRefreshing = false
             }
-
             newsAdapter.onItemClick = {
                 val intent = Intent(activity, DetailActivity::class.java)
                 intent.putExtra(DetailActivity.NEWS_DATA, it)
                 startActivity(intent)
             }
-
             rv_news.layoutManager = LinearLayoutManager(context)
             rv_news.setHasFixedSize(true)
             rv_news.adapter = newsAdapter
         }
     }
 
-    private fun getData(search: String) {
+    private fun getData(search: String, type: Boolean) {
         newsViewModel.news(search).observe(viewLifecycleOwner, { news ->
             if (news != null) {
-                Log.e("HomeFragment", news.data.toString())
                 when (news) {
                     is Resource.Loading -> {
                         loading_view.visibility = View.VISIBLE
@@ -76,7 +72,18 @@ class HomeFragment : Fragment() {
                         loading_view.visibility = View.GONE
                         error_view.visibility = View.GONE
                         rv_news.visibility = View.VISIBLE
-                        newsAdapter.setData(news.data)
+                        if (type) {
+                            newsViewModel.searchNews(search).observe(viewLifecycleOwner, {
+                                Log.e("HomeFragment", it.toString())
+                                if (it.isNotEmpty()) {
+                                    newsAdapter.setData(it)
+                                } else {
+                                    newsAdapter.setData(news.data)
+                                }
+                            })
+                        } else {
+                            newsAdapter.setData(news.data)
+                        }
                     }
                 }
             }
@@ -94,7 +101,7 @@ class HomeFragment : Fragment() {
         searchView.queryHint = "Search Hot News"
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                getData(query.toString())
+                getData(query.toString(), true)
                 return true
             }
 

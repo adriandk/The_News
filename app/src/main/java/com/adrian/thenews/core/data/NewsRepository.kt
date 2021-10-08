@@ -42,6 +42,12 @@ class NewsRepository(
         }
     }
 
+    override fun searchNews(search: String): Flow<List<News>> {
+        return localDataSource.searchNews(search).map {
+            DataMapper.mapEntitiesToDomain(it)
+        }
+    }
+
     override fun setBookmarkNews(news: News, state: Boolean) {
         val newsEntity = DataMapper.mapDomainToEntity(news)
         appExecutors.diskIO().execute {

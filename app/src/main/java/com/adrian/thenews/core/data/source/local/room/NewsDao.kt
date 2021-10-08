@@ -7,13 +7,16 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface NewsDao {
 
-    @Query("SELECT * FROM news ")
+    @Query("SELECT * FROM news")
     fun getAllNews(): Flow<List<NewsEntity>>
 
     @Query("SELECT * FROM news where isFavorite = 1")
     fun getBookmarkNews(): Flow<List<NewsEntity>>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Query("SELECT * FROM news where newsTitle LIKE '%' || :searchQuery || '%'")
+    fun searchData(searchQuery: String): Flow<List<NewsEntity>>
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertNews(news: List<NewsEntity>)
 
     @Update
